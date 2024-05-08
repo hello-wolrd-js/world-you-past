@@ -1,22 +1,16 @@
-import { createSignal, type Component } from "solid-js";
+import { type JSXElement, type Component } from "solid-js";
+import { Nav } from "./components/layout/Nav";
+import { Content } from "./components/layout/Content";
+import { useNavigate } from "@solidjs/router";
 
-const App: Component = () => {
-    const [count, setCount] = createSignal(0);
-    const increment = () => {
-        setCount(count() + 1);
-    };
-    const decrease = () => {
-        setCount(count() - 1);
-    };
+const App: Component<{ children?: JSXElement }> = (props) => {
+    const navHeight = 64;
+    //这里要navigate一下,触发根路由
+    useNavigate()("");
     return (
-        <div class="p-10">
-            <div>count:{count()}</div>
-            <button class="btn" onClick={increment}>
-                +
-            </button>
-            <button class="btn ml-1" onClick={decrease}>
-                -
-            </button>
+        <div class="w-full h-full overflow-x-hidden">
+            <Nav />
+            <Content navHeight={navHeight}>{props.children}</Content>
         </div>
     );
 };

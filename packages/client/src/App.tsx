@@ -14,5 +14,4 @@ const App: Component<{ children?: JSXElement }> = (props) => {
         </div>
     );
 };
-
 export default App;

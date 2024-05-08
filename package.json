@@ -28,6 +28,7 @@
         "@amap/amap-jsapi-loader": "^1.0.1",
         "@solidjs/router": "^0.13.3",
         "solid-js": "^1.8.11",
-        "@world-you-past/shared": "workspace:^"
+        "@world-you-past/shared": "workspace:^",
+        "@world-you-past/models": "workspace:^"
     }
 }

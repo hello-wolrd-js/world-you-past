@@ -2,6 +2,7 @@ import { resolve } from "path";
 import { defineConfig } from "vite";
 import solidPlugin from "vite-plugin-solid";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+import { fileURLToPath } from "node:url";
 
 export default defineConfig({
     plugins: [solidPlugin(), cssInjectedByJsPlugin()],
@@ -15,6 +16,11 @@ export default defineConfig({
             name: "your-world",
             fileName: "your-world",
             formats: ["es"],
+        },
+    },
+    resolve: {
+        alias: {
+            "@": fileURLToPath(new URL("./src", import.meta.url)),
         },
     },
 });

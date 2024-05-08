@@ -1,6 +1,6 @@
 import { type JSXElement, type Component } from "solid-js";
-import { Nav } from "./components/layout/Nav";
-import { Content } from "./components/layout/Content";
+import { Nav } from "@/components/layout/Nav";
+import { Content } from "@/components/layout/Content";
 import { useNavigate } from "@solidjs/router";
 
 const App: Component<{ children?: JSXElement }> = (props) => {

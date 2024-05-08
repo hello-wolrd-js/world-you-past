@@ -3,13 +3,13 @@ import { render } from "solid-js/web";
 import App from "./App";
 import "./index.css";
 import { Route, Router } from "@solidjs/router";
-import { HomeView } from "./views/Home";
+import { HomeView } from "@/views/Home";
 
 const root = document.getElementById("root");
 
 const Main = () => (
     <Router root={App}>
-        <Route path="/" component={HomeView}/>
+        <Route path="/" component={HomeView} />
     </Router>
 );
 

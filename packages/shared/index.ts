@@ -1,1 +1,1 @@
-export const hhh = () => {};
+export * from "./map";

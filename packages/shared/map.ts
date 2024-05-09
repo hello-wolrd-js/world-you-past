@@ -69,6 +69,17 @@ function transformlng(lng: number, lat: number) {
     return ret;
 }
 
+//精确小数点
+
+export const toFixed = (
+    target: [number, number],
+    digit: number
+): [number, number] => {
+    const p1 = target[0].toFixed(digit);
+    const p2 = target[1].toFixed(digit);
+    return [parseFloat(p1), parseFloat(p2)];
+};
+
 // WGS84坐标系转火星坐标系GCj02 / 即WGS84 转谷歌、高德
 export function wgs84togcj02(lng: number, lat: number): [number, number] {
     if (outOfChina(lng, lat)) {

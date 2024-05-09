@@ -11,12 +11,30 @@ import {
 } from "solid-js";
 import "@amap/amap-jsapi-types";
 import { createStore, produce } from "solid-js/store";
+import { Fab } from "./Fab";
 
+//把安全密钥挂载在window对象上
+(window as any)._AMapSecurityConfig = {
+    securityJsCode: import.meta.env.VITE_AMAP_SECRET_KEY,
+};
 export const MapContainer: Component = () => {
-    //把安全密钥挂载在window对象上
-    (window as any)._AMapSecurityConfig = {
-        securityJsCode: import.meta.env.VITE_AMAP_SECRET_KEY,
-    };
+    //用户头像
+    //#region
+    //监听地图缩放
+    const [mapZoom, setMapZoom] = createSignal(20);
+    const markZoom = () => (mapZoom() / 10) * 16 + "px";
+    const markContent = (
+        <img
+            src="https://pub-a08fa93d49d347298f3cfbf1f32118b8.r2.dev/usagi.png"
+            alt="usagi"
+            class="shadow-xl rounded-md"
+            style={{
+                width: markZoom(),
+                height: markZoom(),
+            }} //跟随地图缩放自适应
+        />
+    );
+    //#endregion
 
     //地图
     //#region
@@ -38,17 +56,13 @@ export const MapContainer: Component = () => {
 
             //初始化地图
             //#region
-
-            //监听地图缩放
-            const [mapZoom, setMapZoom] = createSignal(20);
-
             map = new AMap.Map(mapContainer!, {
                 viewMode: "2D",
                 center: center.precise,
                 zoom: mapZoom(),
             });
 
-            //缩放时调整用户标识
+            //监听地图缩放,缩放时调整用户标识
             map.on("zoomend", () => {
                 setMapZoom(map!.getZoom());
             });
@@ -74,18 +88,6 @@ export const MapContainer: Component = () => {
 
             //用户标识
             //#region
-            const markZoom = () => (mapZoom() / 10) * 16 + "px";
-            const markContent = (
-                <img
-                    src="https://pub-a08fa93d49d347298f3cfbf1f32118b8.r2.dev/usagi.png"
-                    alt="usagi"
-                    class="shadow-xl rounded-md"
-                    style={{
-                        width: markZoom(),
-                        height: markZoom(),
-                    }} //跟随地图缩放自适应
-                />
-            );
             userMarker = new AMap.Marker({
                 position: center.precise,
                 content: markContent as HTMLElement,
@@ -136,6 +138,8 @@ export const MapContainer: Component = () => {
     const [count, setCount] = createSignal(0);
     //#endregion
 
+    //实时定位
+    //#region
     let positionWatcherId: number;
     onMount(() => {
         const path: [number, number][] = [];
@@ -187,6 +191,26 @@ export const MapContainer: Component = () => {
     onCleanup(() => {
         navigator.geolocation.clearWatch(positionWatcherId);
     });
+    //#endregion
+
+    //悬浮按钮
+    //#region
+    const trigger = (
+        <img
+            src="https://pub-a08fa93d49d347298f3cfbf1f32118b8.r2.dev/usagi.png"
+            alt="usagi"
+            class="w-full h-full shadow-xl rounded-md"
+        />
+    );
+    const menu = (
+        <div class="flex gap-2">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+        </div>
+    );
+    //#endregion
 
     return (
         <div class="w-full h-full relative">
@@ -207,6 +231,7 @@ export const MapContainer: Component = () => {
                 </div>
             </Show>
             <div ref={mapContainer} class="w-full h-full"></div>
+            <Fab trigger={trigger} menu={menu} menuDirection="left"></Fab>
         </div>
     );
 };

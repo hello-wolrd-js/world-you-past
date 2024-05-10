@@ -1,5 +1,5 @@
 import { Component, JSX, JSXElement, Show, createSignal } from "solid-js";
-import { Opacity } from "./Opacity";
+import { Opacity } from "../Opacity";
 
 export const Fab: Component<{
     direction?: "right-bottom" | "right-top" | "left-top" | "left-bottom";

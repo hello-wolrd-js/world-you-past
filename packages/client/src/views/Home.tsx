@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { MapContainer } from "../components/Map";
+import { MapContainer } from "@/components/map/Map";
 
 export const HomeView: Component = () => {
     return (

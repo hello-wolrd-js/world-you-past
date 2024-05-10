@@ -1,0 +1,37 @@
+/* 容器样式，用于包裹模态框，通常是整个页面或者页面的一部分 */
+.modal-overlay {
+    position: fixed;
+    /* 使用fixed定位，使其相对于视窗固定 */
+    z-index: 100000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* 宽度和高度设置为100%，覆盖整个视窗 */
+    height: 100%;
+    display: flex;
+    /* 使用flex布局，方便子元素居中 */
+    justify-content: center;
+    /* 水平居中 */
+    align-items: center;
+    /* 垂直居中 */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 半透明背景，常用于模态背景 */
+}
+
+/* 模态框本身的样式 */
+.modal-content {
+    position: relative;
+    /* 相对定位，相对于其父元素进行定位 */
+    width: 50%;
+    /* 根据需要设置适当的宽度 */
+    max-width: 600px;
+    /* 最大宽度限制，确保在大屏上也不会过宽 */
+    padding: 20px;
+    /* 内填充，增加一些内部空间 */
+    background-color: #fff;
+    /* 背景色设为白色 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* 加些阴影效果增强层次感 */
+    border-radius: 8px;
+    /* 轻微的圆角 */
+}

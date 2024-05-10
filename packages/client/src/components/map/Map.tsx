@@ -10,8 +10,9 @@ import {
 } from "solid-js";
 import "@amap/amap-jsapi-types";
 import { createStore, produce } from "solid-js/store";
-import { Fab } from "./Fab";
+import { Fab } from "../fab/Fab";
 import toast from "solid-toast";
+import { useModal } from "../modal/Modal";
 
 //把安全密钥挂载在window对象上
 (window as any)._AMapSecurityConfig = {
@@ -205,10 +206,11 @@ export const MapContainer: Component = () => {
             class="w-full h-full shadow-xl rounded-md"
         />
     );
+    const modal = useModal();
     const menu = (
         <div class="flex gap-2">
             {/* 房间大厅 */}
-            <div class="btn shadow-xl">
+            <div class="btn shadow-xl" onClick={() => modal.open(123)}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

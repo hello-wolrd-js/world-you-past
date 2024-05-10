@@ -5,6 +5,8 @@ export const Fab: Component<{
     direction?: "right-bottom" | "right-top" | "left-top" | "left-bottom";
     menuDirection?: "right" | "left" | "top" | "bottom";
     position?: "absolute" | "fixed";
+    offsetX?: number;
+    offsetY?: number;
     width?: number; //单位是像素
     height?: number; //单位是像素
     trigger: JSXElement;
@@ -18,34 +20,36 @@ export const Fab: Component<{
         height: `${props.height || 40}px`,
         position: props.position || "fixed",
     };
+    const offsetX = `${props.offsetX || 20}px`;
+    const offsetY = `${props.offsetY || 20}px`;
     const fabPosition = (): JSX.CSSProperties => {
         if (props.direction) {
             return {
                 top:
                     props.direction === "right-top" ||
                     props.direction === "left-top"
-                        ? "20px"
+                        ? offsetY
                         : "",
                 right:
                     props.direction === "right-top" ||
                     props.direction === "right-bottom"
-                        ? "20px"
+                        ? offsetX
                         : "",
                 bottom:
                     props.direction === "left-bottom" ||
                     props.direction === "right-bottom"
-                        ? "20px"
+                        ? offsetY
                         : "",
                 left:
                     props.direction === "left-bottom" ||
                     props.direction === "left-top"
-                        ? "20px"
+                        ? offsetX
                         : "",
             };
         } else {
             return {
-                right: "20px",
-                bottom: "20px",
+                right: offsetX,
+                bottom: offsetY,
             };
         }
     };

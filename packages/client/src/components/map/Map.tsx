@@ -209,9 +209,9 @@ export const MapContainer: Component = () => {
     );
     const modal = useModal();
     const menu = (
-        <div class="flex gap-2">
+        <div class="flex flex-col-reverse gap-3">
             {/* 房间大厅 */}
-            <div class="btn shadow-xl" onClick={() => modal.open(<Room />)}>
+            <div class="btn shadow-outer" onClick={() => modal.open(<Room />)}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -229,7 +229,7 @@ export const MapContainer: Component = () => {
             </div>
             {/* 将地图中心移动到用户位置 */}
             <div
-                class="btn shadow-xl"
+                class="btn shadow-outer"
                 onClick={() => map?.setCenter(center.precise)}
             >
                 <svg
@@ -272,13 +272,7 @@ export const MapContainer: Component = () => {
             {/* 地图容器 */}
             <div ref={mapContainer} class="w-full h-full"></div>
             {/* 悬浮按钮 */}
-            <Fab
-                trigger={trigger}
-                menu={menu}
-                menuDirection="left"
-                width={50}
-                height={50}
-            />
+            <Fab trigger={trigger} menu={menu} width={50} height={50} />
         </div>
     );
 };

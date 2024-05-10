@@ -22,7 +22,7 @@ const RoomList: Component = () => {
                 <span class="flex-1">人数</span>
                 <div class="btn btn-xs opacity-0">加入</div>
             </div>
-            <div class="flex flex-col gap-2 max-h-[60%] overflow-y-auto">
+            <div class="flex flex-col max-h-[60%] overflow-y-auto">
                 <RoomItem id={1} name="kancy" count={1}></RoomItem>
                 <RoomItem id={2} name="kancy" count={2}></RoomItem>
                 <RoomItem id={3} name="kancy" count={3}></RoomItem>

@@ -1,9 +1,12 @@
 import { Component, JSX, JSXElement, Show, createSignal } from "solid-js";
-import { Transition } from "solid-transition-group";
+import { Opacity } from "./Opacity";
 
 export const Fab: Component<{
     direction?: "right-bottom" | "right-top" | "left-top" | "left-bottom";
     menuDirection?: "right" | "left" | "top" | "bottom";
+    position?: "absolute" | "fixed";
+    width?: number; //单位是像素
+    height?: number; //单位是像素
     trigger: JSXElement;
     menu: JSXElement;
 }> = (props) => {
@@ -11,8 +14,9 @@ export const Fab: Component<{
     //#region
 
     const base: JSX.CSSProperties = {
-        width: "40px",
-        height: "40px",
+        width: `${props.width || 40}px`,
+        height: `${props.height || 40}px`,
+        position: props.position || "fixed",
     };
     const fabPosition = (): JSX.CSSProperties => {
         if (props.direction) {
@@ -102,7 +106,7 @@ export const Fab: Component<{
 
     return (
         <div
-            class="absolute rounded-md z-10 bg-pink-300 shadow-lg hover:bg-pink-200 duration-300"
+            class="fixed rounded-md z-10 bg-pink-300 shadow-lg hover:bg-pink-200 duration-300"
             style={{
                 ...fabPosition(),
                 ...base,
@@ -118,20 +122,7 @@ export const Fab: Component<{
                     {props.trigger}
                 </div>
                 {/* menu */}
-                <Transition
-                    onEnter={(el, done) => {
-                        const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-                            duration: 300,
-                        });
-                        a.finished.then(done);
-                    }}
-                    onExit={(el, done) => {
-                        const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-                            duration: 300,
-                        });
-                        a.finished.then(done);
-                    }}
-                >
+                <Opacity>
                     <Show when={show()}>
                         <div
                             class="absolute flex gap-2 duration-300"
@@ -142,7 +133,7 @@ export const Fab: Component<{
                             {props.menu}
                         </div>
                     </Show>
-                </Transition>
+                </Opacity>
             </div>
         </div>
     );

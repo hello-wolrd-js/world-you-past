@@ -1,8 +1,14 @@
-import { Component } from "solid-js";
+import { useGameStore } from "@/stores/game";
+import { Component, Show, createSignal } from "solid-js";
+import toast from "solid-toast";
 
-const RoomItem: Component<{ id: number; name: string; count: number }> = (
-    props
-) => {
+const gameStore = useGameStore();
+
+const RoomItem: Component<{
+    id: number; //序号
+    name: string;
+    count: number;
+}> = (props) => {
     return (
         <div class="flex gap-2 justify-around text-center border-t-[1px] border-dashed py-3 pr-4">
             <span class="flex-1">{props.id}</span>
@@ -34,19 +40,53 @@ const RoomList: Component = () => {
     );
 };
 
-export const RoomAction: Component = () => {
-    return <div></div>;
+const RoomAction: Component = () => {
+    const [name, setName] = createSignal("");
+    const handleCreateGame = () => {
+        if (name()) gameStore.createGame(name());
+        else toast.error("房间名不能为空");
+    };
+    return (
+        <div class="mt-2 flex-1 flex justify-center items-center gap-1">
+            <input
+                type="text"
+                placeholder="房间名"
+                class="input input-sm input-bordered w-full max-w-xs"
+                value={name()}
+                onInput={(e) => setName(e.target.value)}
+            />
+            <button class="btn btn-warning btn-sm" onClick={handleCreateGame}>
+                创建房间
+            </button>
+        </div>
+    );
+};
+
+const CurrentRoom: Component = () => {
+    const handleCloseRoom = () => {
+        gameStore.overGame();
+        toast.success("关闭成功");
+    };
+    return (
+        <section class="flex-[0.7] flex gap-2 justify-center items-center rounded-lg">
+            <div>房间名: {gameStore.state.currentGame?.name}</div>
+            <div>人数: {gameStore.state.currentGame?.players.length}</div>
+            <button class="btn btn-error btn-sm" onClick={handleCloseRoom}>
+                关闭
+            </button>
+        </section>
+    );
 };
 
 export const Room: Component = () => {
     return (
         <div class="w-full h-96 flex flex-col">
-            <h1 class="text-xl text-center">房间大厅</h1>
-            <div class="divider"></div>
             {/* 房间列表 */}
             <RoomList></RoomList>
             {/* 房间操作 */}
-            <RoomAction></RoomAction>
+            <Show when={gameStore.state.currentGame} fallback={<RoomAction />}>
+                <CurrentRoom></CurrentRoom>
+            </Show>
         </div>
     );
 };

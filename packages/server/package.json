@@ -11,7 +11,8 @@
     "license": "ISC",
     "dependencies": {
         "elysia": "latest",
-        "mongoose": "^8.3.4"
+        "mongoose": "^8.3.4",
+        "socket.io": "^4.7.5"
     },
     "devDependencies": {
         "bun-types": "latest"

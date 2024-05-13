@@ -1,20 +1,20 @@
 {
-    "name": "@world-you-past/server",
-    "version": "1.0.0",
-    "description": "",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "bun run --watch src/index.ts"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "elysia": "latest",
-        "mongoose": "^8.3.4",
-        "socket.io": "^4.7.5"
-    },
-    "devDependencies": {
-        "bun-types": "latest"
-    }
+  "name": "@world-you-past/server",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "elysia": "latest",
+    "mongoose": "^8.3.4",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  }
 }

@@ -15,4 +15,5 @@ export interface GameRecord {
     support: number; //本次游戏的点赞数量
 }
 
+
 type Path = [number, number];

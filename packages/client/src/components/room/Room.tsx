@@ -78,6 +78,14 @@ const CurrentRoom: Component = () => {
     );
 };
 
+const ws = new WebSocket("wss://tyee.life:3555/game");
+ws.onopen = () => {
+    console.log("连接成功");
+};
+ws.onerror = (e) => {
+    console.error("连接失败",e);
+};
+
 export const Room: Component = () => {
     return (
         <div class="w-full h-96 flex flex-col">

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { GameRecord } from "@world-you-past/models";
+import { GameRecord, User } from "@world-you-past/models";
 
 //Schema
 //#region
@@ -45,6 +45,11 @@ const GameRecordSchema = new mongoose.Schema<GameRecord>(
         },
     }
 );
+const userSchema = new mongoose.Schema({
+    id: { type: String, required: true },
+    avatar: { type: String, required: true }, //用户头像
+    records: [GameRecordSchema], // 用户所参与比赛的游戏
+});
 //#endregion
 
 //Model
@@ -52,6 +57,11 @@ const GameRecordSchema = new mongoose.Schema<GameRecord>(
 export const GameRecordModel = mongoose.model<GameRecord>(
     "game-record",
     GameRecordSchema
+);
+
+export const UserModel = mongoose.model<User>(
+    'User',
+    userSchema
 );
 //#endregion
 
@@ -66,7 +76,32 @@ export const createGameRecord = async (
         throw "创建游戏记录失败: " + error;
     }
 };
+//保存游戏记录到用户
+export const saveUserRecord = async (
+    record: GameRecord
+): Promise<GameRecord> => {
+    try {
+    
+        const playerIds = Object.keys(record.paths);
+
+        for (const playerId of playerIds) {
+            // 获取每一个玩家
+            const user = await UserModel.findById(playerId);
+            // 添加新游戏记录到玩家记录列表中
+            if (user) { 
+                user.records.push(record);
+                await user.save();
+            }
+        }
+        
+        return record;
+    } catch (error) {
+        throw new Error("保存游戏记录失败: " + error);
+    }
+};
 
 export default {
     createGameRecord,
+    saveUserRecord
 };
+

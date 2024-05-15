@@ -18,3 +18,22 @@ export const recordDTO = {
         ),
     },
 };
+
+export const user_recordDTO = {
+    save: {
+        body: t.Object(
+            {   id:t.String(E("需要gameid")),
+                paths: t.Record(
+                    t.String(),
+                    t.Array(t.Tuple([t.Number(), t.Number()])),
+                    E("需要paths")
+                ),
+                totalTime: t.Number(E("需要totalTime")),
+                startTime: t.Number(E("需要startTime")),
+                endTime: t.Number(E("需要endTime")),
+                support:t.Number(E("需要support")),
+            },
+            E("需要请求体")
+        ),
+    },
+};

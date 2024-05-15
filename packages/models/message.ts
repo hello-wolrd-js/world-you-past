@@ -28,3 +28,4 @@ export interface CreateGameRequestMessage {
 export interface OverGameRequestMessage {
     roomId: string; //要结束房间id
 }
+

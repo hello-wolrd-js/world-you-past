@@ -39,6 +39,13 @@ class GameRoom {
     public join(player: GamePlayer) {
         this.players.add(player);
     }
+    //获取当前房间的信息
+    public getInfo() {
+        return {
+            id: this.id,
+            players: [...this.players.values()].map((p) => p.id),
+        };
+    }
 }
 class GamePlayer {
     constructor(public id: string, public ws: WS) {}
@@ -110,7 +117,11 @@ export const GameService = new Elysia().group("/game", (app) =>
         })
         //获取当前房间列表
         .get("/room", () => {
-            return SR(200, "获取游戏房间列表成功", [...RoomMap.entries()]);
+            return SR(
+                200,
+                "获取游戏房间列表成功",
+                [...RoomMap.values()].map((r) => r.getInfo())
+            );
         })
 );
 

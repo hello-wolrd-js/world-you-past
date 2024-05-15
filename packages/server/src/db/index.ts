@@ -1,4 +1,5 @@
 import { connect } from "mongoose";
+import record from "./record";
 
 try {
     await connect("mongodb://localhost:27017/world-you-past");
@@ -7,4 +8,6 @@ try {
     console.error("数据库连接失败");
 }
 
-export const db = {};
+export const db = {
+    record,
+};

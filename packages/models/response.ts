@@ -4,7 +4,7 @@ export interface SuccessResponse<T> {
     data: T;
 }
 
-export interface ErrorResponse {
+export interface ErrorResponse<U> {
     code: number;
-    error: string;
+    error: U;
 }

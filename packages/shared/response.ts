@@ -11,10 +11,10 @@ export function createSuccessResponse<T>(
         data,
     };
 }
-export function createErrorResponse(
+export function createErrorResponse<U = string>(
     code: number,
-    error: string
-): ErrorResponse {
+    error: U
+): ErrorResponse<U> {
     return {
         code,
         error,

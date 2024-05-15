@@ -1,8 +1,12 @@
 import Elysia from "elysia";
-import "./db";
-import { GameService } from "./service/game";
-import { Logger } from "./plugin/log";
-import { TLS } from "./plugin/tls";
-import { saveService } from "./db/game";
+import { GameService } from "@/services/game";
+import { Logger } from "@/plugins/log";
+import { TLS } from "@/plugins/tls";
+import { RecordService } from "@/services/record";
 
-new Elysia().use(TLS).use(Logger).use(GameService).use(saveService).listen(3555);
+new Elysia()
+    .use(TLS)
+    .use(Logger)
+    .use(GameService)
+    .use(RecordService)
+    .listen(3555);

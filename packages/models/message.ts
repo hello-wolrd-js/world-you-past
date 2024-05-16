@@ -1,4 +1,11 @@
+export type MessageType =
+    | "create-game"
+    | "join-game"
+    | "over-game"
+    | "broadcast";
+
 //websocket通信请求格式
+//请求
 export interface RequestMessage<
     T extends
         | BroadcastRequestMessage
@@ -6,7 +13,7 @@ export interface RequestMessage<
         | unknown = unknown
 > {
     //根据不同的类型做出不同的响应
-    type: "create-game" | "join-game" | "over-game" | "broadcast";
+    type: MessageType;
     data: T;
 }
 
@@ -29,3 +36,31 @@ export interface OverGameRequestMessage {
     roomId: string; //要结束房间id
 }
 
+export type RequestMessageMap = {
+    "create-game": CreateGameRequestMessage;
+    "join-game": JoinGameRequestMessage;
+    "over-game": OverGameRequestMessage;
+    broadcast: BroadcastRequestMessage;
+};
+
+//响应
+//#region
+export type ResponseMessageMap = {
+    "create-game": RequestMessage<CreateGameResponseMessage>;
+    "join-game": JoinGameRequestMessage;
+    "over-game": OverGameRequestMessage;
+    broadcast: BroadcastRequestMessage;
+};
+
+//websocket响应格式
+export interface ResponseMessage<
+    T extends CreateGameResponseMessage | unknown = unknown
+> {
+    //根据不同的类型做出不同的响应
+    type: MessageType;
+    data: T;
+}
+
+export interface CreateGameResponseMessage {}
+
+//#endregion

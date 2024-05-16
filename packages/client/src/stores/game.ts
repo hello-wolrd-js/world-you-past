@@ -2,6 +2,7 @@ import { createStore } from "solid-js/store";
 import { Game } from "@world-you-past/models";
 import { nanoid } from "nanoid";
 import { useUserStore } from "./user";
+import { useWsStore } from "./ws";
 
 interface GameStoreState {
     currentGame: Game | null;
@@ -14,12 +15,16 @@ const [store, setStore] = createStore<GameStoreState>({
 });
 
 //创建一场游戏
-const createGame = (name: string) => {
+const createGame = async (name: string) => {
     const userStore = useUserStore();
+    const wsStore = useWsStore();
+    if (!userStore.state.user || !wsStore.state.ws) return;
+
+    // wsStore.send("create-game", {});
     const newGame: Game = {
         id: nanoid(),
         name,
-        players: [userStore.state.user!], //默认加上当前用户
+        players: [userStore.state.user], //默认加上当前用户
     };
     setStore("currentGame", newGame);
 };

@@ -114,6 +114,9 @@ export const GameService = new Elysia().group("/game", (app) =>
                     ws.send(ER(-1, "type错误"));
                 }
             },
+            error(ws) {
+                console.log("websocket连接失败: " + ws);
+            },
         })
         //获取当前房间列表
         .get("/room", () => {

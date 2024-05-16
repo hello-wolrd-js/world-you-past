@@ -46,10 +46,10 @@ export type RequestMessageMap = {
 //响应
 //#region
 export type ResponseMessageMap = {
-    "create-game": RequestMessage<CreateGameResponseMessage>;
-    "join-game": JoinGameRequestMessage;
-    "over-game": OverGameRequestMessage;
-    broadcast: BroadcastRequestMessage;
+    "create-game": ResponseMessage<CreateGameResponseMessage>;
+    "join-game": ResponseMessage<JoinGameRequestMessage>;
+    "over-game": ResponseMessage<OverGameRequestMessage>;
+    broadcast: ResponseMessage<BroadcastRequestMessage>;
 };
 
 //websocket响应格式
@@ -62,5 +62,11 @@ export interface ResponseMessage<
 }
 
 export interface CreateGameResponseMessage {}
+
+export interface JoinGameResponseMessage {}
+
+export interface OverGameResponseMessage {}
+
+export interface BroadcastResponseMessage {}
 
 //#endregion

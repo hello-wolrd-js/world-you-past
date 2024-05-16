@@ -3,6 +3,10 @@ import { Game } from "@world-you-past/models";
 import { nanoid } from "nanoid";
 import { useUserStore } from "./user";
 import { useWsStore } from "./ws";
+import {
+    createErrorResponse,
+    isSuccessResponse,
+} from "@world-you-past/shared/response";
 
 interface GameStoreState {
     currentGame: Game | null;
@@ -18,15 +22,25 @@ const [store, setStore] = createStore<GameStoreState>({
 const createGame = async (name: string) => {
     const userStore = useUserStore();
     const wsStore = useWsStore();
-    if (!userStore.state.user || !wsStore.state.ws) return;
+    if (!userStore.state.user || !wsStore.state.ws) return null;
 
-    // wsStore.send("create-game", {});
-    const newGame: Game = {
-        id: nanoid(),
-        name,
-        players: [userStore.state.user], //默认加上当前用户
-    };
-    setStore("currentGame", newGame);
+    try {
+        const data = await wsStore.send("create-game", {
+            //用房间名作为roomId
+            roomId: name,
+        });
+        if (isSuccessResponse(data)) {
+            const newGame: Game = {
+                id: nanoid(),
+                name,
+                players: [userStore.state.user], //默认加上当前用户
+            };
+            setStore("currentGame", newGame);
+        }
+        return data;
+    } catch (error) {
+        return createErrorResponse(-3, "网络错误!");
+    }
 };
 
 //开始游戏

@@ -20,3 +20,15 @@ export function createErrorResponse<U = string>(
         error,
     };
 }
+
+export function isSuccessResponse<T>(
+    response: SuccessResponse<T> | ErrorResponse
+): response is SuccessResponse<T> {
+    return response.code >= 0;
+}
+
+export function isErrorResponse<T>(
+    response: SuccessResponse<T> | ErrorResponse
+): response is ErrorResponse {
+    return !isSuccessResponse(response);
+}

@@ -1,6 +1,6 @@
 import { User } from "./user";
 
-export interface Game {
+export interface GameRoom {
     id: string; //当前游戏的标识id
     name: string; //当前游戏(房间)的名字
     players: User[]; //当前游戏的玩家们

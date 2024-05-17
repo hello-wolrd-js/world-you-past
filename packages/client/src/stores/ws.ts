@@ -5,9 +5,12 @@ import {
     ErrorResponse,
     MessageType,
     RequestMessageMap,
+    Response,
+    ResponseMessage,
     ResponseMessageMap,
     SuccessResponse,
 } from "@world-you-past/models";
+import { isSuccessResponse } from "@world-you-past/shared/response";
 
 interface WsStoreState {
     ws: WebSocket | null;
@@ -21,15 +24,17 @@ const [store, setStore] = createStore<WsStoreState>({
 
 const _map = new Map<
     MessageType,
-    <T extends MessageType>(data: ResponseMessageMap[T]) => void
+    <T extends MessageType>(
+        data: SuccessResponse<ResponseMessageMap[T]> | ErrorResponse
+    ) => void
 >();
 
 const initWS = () => {
     const userStore = useUserStore();
     if (userStore.state.user) {
         const _ws = new WebSocket(
-            `wss://${import.meta.env.VITE_REMOTE}/game?playerId=${
-                userStore.state.user.id
+            `wss://${import.meta.env.VITE_REMOTE}/game?player_name=${
+                userStore.state.user.name
             }`
         );
         _ws.onopen = () => {
@@ -40,8 +45,12 @@ const initWS = () => {
             console.error("连接服务器失败!", e);
         };
         _ws.onmessage = (e) => {
-            const data = e.data;
-            _map.get(data.type)?.(data);
+            //注意这里e.data是字符串,得parse一下
+            const msg = JSON.parse(e.data) as Response<ResponseMessage, any>;
+            if (isSuccessResponse(msg)) {
+                const handler = _map.get(msg.data.type);
+                handler?.(msg as any);
+            }
         };
         setStore("ws", _ws);
     }

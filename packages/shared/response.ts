@@ -1,4 +1,8 @@
-import { SuccessResponse, ErrorResponse } from "@world-you-past/models";
+import {
+    SuccessResponse,
+    ErrorResponse,
+    ResponseMessage,
+} from "@world-you-past/models";
 
 export function createSuccessResponse<T>(
     code: number,
@@ -19,6 +23,21 @@ export function createErrorResponse<U = string>(
         code,
         error,
     };
+}
+
+export function createWebSocketSuccessResponse<T extends ResponseMessage>(
+    code: number,
+    msg: string,
+    data: T
+): SuccessResponse<T> {
+    return createSuccessResponse(code, msg, data);
+}
+
+export function createWebSocketErrorResponse<U = string>(
+    code: number,
+    error: U
+): ErrorResponse<U> {
+    return createErrorResponse(code, error);
 }
 
 export function isSuccessResponse<T>(

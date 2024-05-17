@@ -19,7 +19,7 @@ export interface RequestMessage<
 
 //请求信息格式
 export interface JoinGameRequestMessage {
-    playerId: string; //玩家id
+    playerName: string; //玩家名称
     roomId: string; //游戏id
 }
 
@@ -29,7 +29,7 @@ export interface BroadcastRequestMessage {
 }
 
 export interface CreateGameRequestMessage {
-    roomId: string; //房间id
+    roomName: string; //房间名称
 }
 
 export interface OverGameRequestMessage {

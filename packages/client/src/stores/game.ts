@@ -44,6 +44,7 @@ const createGame = async (name: string) => {
     }
 };
 
+//获取所有游戏房间(不分页)
 const getGameRooms = async () => {
     const result = await GAME_API.getGameRooms();
     if (isSuccessResponse(result)) {

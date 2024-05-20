@@ -30,7 +30,12 @@ class GameRoom {
     //房间内广播消息
     public broadcast<T>(msg: T) {
         this.players.forEach((player) => {
-            player.ws.send(msg);
+            player.ws.send(
+                WSR(200, "广播消息", {
+                    type: "broadcast",
+                    data: msg,
+                })
+            );
         });
     }
     //关闭房间
@@ -106,7 +111,12 @@ export const GameService = new Elysia()
                 if (!player) return ws.send(WER(-1, "目标用户不存在"));
 
                 room.join(player);
-                ws.send(SR(200, "加入房间成功", null));
+                ws.send(
+                    WSR(200, "加入房间成功", {
+                        type: "join-game",
+                        data: null,
+                    })
+                );
             } else if (msg.type === "broadcast") {
                 //房间内广播
                 const data = msg.data as BroadcastRequestMessage;
